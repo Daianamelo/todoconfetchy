@@ -1,25 +1,48 @@
-import React from "react";
+import React, {useState} from "react";//importo react y el hook useState
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
+
 
 //create your first component
 const Home = () => {
+
+	//declaro los estados//
+	const[pendientes,setPendientes]=useState("")//1. creamos un estado del input pendientes
+        //[espacio donde guardo los valores,funcion que actualiza los valores]
+	//creo funcion para ejecutar la actualizacion del valor inicial
+
+
+
+	function handlePendientes (e) {
+		//console.log(e.target.value)//para poder ver el valor del target en el que esta posicionado
+		setPendientes(e.target.value) 
+	}
+
+
+	function enviarPendientes (e){
+		e.preventDefault()// detenemos el comportamiento predeterminado para procesar nuestro codigo
+
+	} 
+	console.log(pendientes);
+
 	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
+		<>
+<form className="container" onSubmit={enviarPendientes}>
+  <div className="mb-3">
+    <label htmlFor="exampleInputEmail1" className="form-label">to do's</label>
+    {/*2. definimos el evento ochange en el input */}
+	<input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" onChange={handlePendientes}/>
+  </div>
+  <button type="submit" className="btn btn-primary">Submit</button>
+</form>
+<div>
+	
+</div>
+
+<ul>
+<li> {pendientes.map((item, index)=><li key={item.id}>{item.name}<button onClick={() => handlePendientes(index)}>x</button></li>)}</li>
+</ul>
+
+</>
 	);
 };
 
