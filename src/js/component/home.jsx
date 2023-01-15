@@ -10,6 +10,8 @@ const Home = () => {
         //[espacio donde guardo los valores,funcion que actualiza los valores]
 	//creo funcion para ejecutar la actualizacion del valor inicial
 
+	const [data, setData] = useState([]); // 2. creamos un estado de lo que se guarda en el array
+
 
 
 	function handlePendientes (e) {
@@ -20,9 +22,23 @@ const Home = () => {
 
 	function enviarPendientes (e){
 		e.preventDefault()// detenemos el comportamiento predeterminado para procesar nuestro codigo
+		setData(data.concat(pendientes))
 
 	} 
 	console.log(pendientes);
+
+	// eliminar item en array
+	const deleteItem = (id) => {
+		setData(data.filter((item, index) => {
+		  return index != id;
+		}))
+	  }
+
+	  //el array
+	  const listItems = data.map((item, index) =>
+  <li>{item} <button onClick={() => remove(index)}>
+  </button>X</li>
+  );
 
 	return (
 		<>
@@ -30,17 +46,31 @@ const Home = () => {
   <div className="mb-3">
     <label htmlFor="exampleInputEmail1" className="form-label">to do's</label>
     {/*2. definimos el evento ochange en el input */}
-	<input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" onChange={handlePendientes}/>
+	<input type="text" className="form-control" onChange={handlePendientes}/>
   </div>
-  <button type="submit" className="btn btn-primary">Submit</button>
+  <button type="submit" onClick={enviarPendientes} className="btn btn-primary">Submit</button>
+  <div id="contenedorData" className="text-light">
+                        {
+                        data.map((item, index) => (
+                            <div className="row d-flex m-2"  style={{borderRadius:"20px",backgroundColor: "rgb(182, 0, 0)"}}>
+                                <div className="col-6">
+                                    <h5 className="m-2">{item}</h5>
+                                </div>
+                                <div className="col-6 text-end">
+                                    <i className="fas fa-trash-alt align-items-end m-2 pt-1"
+                                        onClick={
+                                            () => setData(data.filter((elementoDiv, currentIndex) => index != currentIndex))
+                                    }></i>
+                                </div>
+                            </div>
+                        ))
+                    } </div>
+  
 </form>
 <div>
 	
 </div>
 
-<ul>
-<li> {pendientes.map((item, index)=><li key={item.id}>{item.name}<button onClick={() => handlePendientes(index)}>x</button></li>)}</li>
-</ul>
 
 </>
 	);
