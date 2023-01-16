@@ -1,9 +1,16 @@
-import React, {useState} from "react";//importo react y el hook useState
+import React, {useState, useEffect} from "react";//importo react y el hook useState
 
 
 
 //create your first component
 const Home = () => {
+
+
+
+  //Haz que tu TODO List se sincronice con la API de backend cada vez que se agregue o elimine una tarea.
+
+
+
 
 	//declaro los estados//
 	const[pendientes,setPendientes]=useState("")//1. creamos un estado del input pendientes
@@ -11,7 +18,6 @@ const Home = () => {
 	//creo funcion para ejecutar la actualizacion del valor inicial
 
 	const [data, setData] = useState([]); // 2. creamos un estado de lo que se guarda en el array
-
 
 
 	function handlePendientes (e) {
@@ -23,6 +29,7 @@ const Home = () => {
 	function enviarPendientes (e){
 		e.preventDefault()// detenemos el comportamiento predeterminado para procesar nuestro codigo
 		setData(data.concat(pendientes))
+    setPendientes("");
 
 	} 
 	console.log(pendientes);
@@ -40,13 +47,34 @@ const Home = () => {
   </button>X</li>
   );
 
+//para hacer el fetch
+useEffect (()=>{
+
+fetch("http://assets.breatheco.de/apis/fake/todos/user/<daiana14>/")
+.then((response)=>response.json())
+.then((data)=>console.log(data))
+
+
+}
+
+
+
+
+
+,[])
+
+
+
+
+
+
 	return (
 		<>
 <form className="container" onSubmit={enviarPendientes}>
   <div className="mb-3">
     <label htmlFor="exampleInputEmail1" className="form-label">to do's</label>
     {/*2. definimos el evento ochange en el input */}
-	<input type="text" className="form-control" onChange={handlePendientes}/>
+	<input type="text" className="form-control" onChange={handlePendientes} value={pendientes}/>
   </div>
   <button type="submit" onClick={enviarPendientes} className="btn btn-primary">Submit</button>
   <div id="contenedorData" className="text-light">
