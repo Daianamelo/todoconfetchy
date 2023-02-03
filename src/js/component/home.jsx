@@ -34,6 +34,53 @@ const Home = () => {
 	} 
 	console.log(pendientes);
 
+  function crearUsuario(){
+    fetch("https://assets.breatheco.de/apis/fake/todos/user/esposadesuga",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify([])
+    })
+    .then((response)=>response.json())
+    .then((data)=>console.log(data))
+  }
+
+  function obtenerTodoList (){
+    fetch("https://assets.breatheco.de/apis/fake/todos/user/esposadesuga",{
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      },
+    })
+    .then((response)=>response.json())
+    .then((data)=>console.log(data))
+  }
+  function update(){
+    fetch("https://assets.breatheco.de/apis/fake/todos/user/esposadesuga",{
+      method: "PUT",//ACTUALIZA
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    }).then((response)=>response.json())
+    .then((data)=>console.log(data))
+  }
+  console.log(update())
+
+  function eliminarTodoses() {
+    fetch("https://assets.breatheco.de/apis/fake/todos/user/esposadesuga",{
+      method: "DELETE",//ACTUALIZA
+      headers: {
+        "Content-Type": "application/json"
+      }
+  }) .then((response)=>response.json())
+  .then((data)=>{console.log(data.result)
+    if (data.result==="ok"){
+      setData([])
+    }
+  });
+
 	// eliminar item en array
 	const deleteItem = (id) => {
 		setData(data.filter((item, index) => {
@@ -49,23 +96,10 @@ const Home = () => {
 
 //para hacer el fetch
 useEffect (()=>{
-
-fetch("http://assets.breatheco.de/apis/fake/todos/user/<daiana14>/")
-.then((response)=>response.json())
-.then((data)=>console.log(data))
-
-
-}
-
-
-
-
-
-,[])
-
-
-
-
+  crearUsuario();
+  obtenerTodoList();
+  update();
+},[])
 
 
 	return (
